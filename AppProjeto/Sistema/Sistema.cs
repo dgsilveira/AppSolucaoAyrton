@@ -20,6 +20,8 @@ namespace AppProjeto.Sistema
         #region Tela Inicial
         public void Iniciar()
         {
+            InserirDados();
+
             int opcaoInicial = 0;
             do
             {
@@ -75,15 +77,14 @@ namespace AppProjeto.Sistema
                         Add(pessoas1);
                         break;
                     case 3:
+                        Excluir(pessoas1);
                         Console.Clear();
                         break;
                     case 4:
+                        Transferir(pessoas1, pessoas2);
                         Console.Clear();
                         break;
                     case 5:
-                        Console.Clear();
-                        break;
-                    case 6:
                         Console.WriteLine("Saindo!");
                         break;
                     default:
@@ -92,8 +93,7 @@ namespace AppProjeto.Sistema
                 }
                 Console.ReadKey();
                 Console.Clear();
-            } while (opcao != 6);
-
+            } while (opcao != 5);
         }
 
         #endregion
@@ -109,7 +109,7 @@ namespace AppProjeto.Sistema
         #region Listas Compartilhadas
         private void MenuListas()
         {
-            Console.WriteLine("1 resumo geral\r\n2 Add\r\n3 Excluir\r\n4 Buscar\r\n5 Transferir\r\n6 Sair");
+            Console.WriteLine("1 resumo geral\r\n2 Add\r\n3 Excluir\r\n4 Transferir\r\n5 Sair");
         }
 
         private void ResumoGeral(List<Pessoa> lista)
@@ -137,6 +137,106 @@ namespace AppProjeto.Sistema
             var pessoa = new Pessoa(id, nome);
 
             lista.Add(pessoa);
+        }
+
+        private void Excluir(List<Pessoa> lista)
+        {
+            Console.WriteLine("1 - Buscar por Id");
+            Console.WriteLine("2 - Buscar por Nome");
+
+            int opcao = int.Parse(Console.ReadLine());
+
+            if(opcao == 1)
+            {
+                Console.WriteLine("Digite o id");
+                var id = int.Parse(Console.ReadLine());
+                Pessoa pessoa = lista.Find(p => p.Id == id);
+
+                lista.Remove(pessoa);
+
+                Console.WriteLine($"Removido: {pessoa.Id} {pessoa.Nome}");
+
+                Console.WriteLine("\nLista nova:");
+                ResumoGeral(lista);
+                Console.ReadKey();
+            }
+            else
+            {
+                Console.WriteLine("Digite o nome");
+                var nome = Console.ReadLine();
+                Pessoa pessoa = lista.Find(p => p.Nome == nome);
+
+                lista.Remove(pessoa);
+
+                Console.WriteLine($"Removido: {pessoa.Id} {pessoa.Nome}");
+
+                Console.WriteLine("\nLista nova:");
+                ResumoGeral(lista);
+                Console.ReadKey();
+            }
+        }
+
+        private void Transferir(List<Pessoa> lista1, List<Pessoa> lista2)
+        {
+            Console.WriteLine("1 - Buscar por Id");
+            Console.WriteLine("2 - Buscar por Nome");
+
+            int opcao = int.Parse(Console.ReadLine());
+
+            if (opcao == 1)
+            {
+                Console.WriteLine("Digite o id");
+                var id = int.Parse(Console.ReadLine());
+                Pessoa pessoa = lista1.Find(p => p.Id == id);
+
+                lista1.Remove(pessoa);
+
+                lista2.Add(pessoa);
+
+                Console.WriteLine($"Transferido: {pessoa.Id} {pessoa.Nome}");
+
+                Console.WriteLine("\nLista origem:");
+                ResumoGeral(lista1);
+
+                Console.WriteLine("\nLista destino:");
+                ResumoGeral(lista2);
+                Console.ReadKey();
+            }
+            else
+            {
+                Console.WriteLine("Digite o nome");
+                var nome = Console.ReadLine();
+                Pessoa pessoa = lista1.Find(p => p.Nome == nome);
+
+                lista1.Remove(pessoa);
+
+                lista2.Add(pessoa);
+
+                Console.WriteLine($"Removido: {pessoa.Id} {pessoa.Nome}");
+
+                Console.WriteLine($"Transferido: {pessoa.Id} {pessoa.Nome}");
+
+                Console.WriteLine("\nLista origem:");
+                ResumoGeral(lista1);
+
+                Console.WriteLine("\nLista destino:");
+                ResumoGeral(lista2);
+                Console.ReadKey();
+            }
+        }
+        #endregion
+
+        #region Métodos Privados
+
+        private void InserirDados()
+        {
+            pessoas1.Add(new Pessoa(1, "Ayrton"));
+            pessoas1.Add(new Pessoa(2, "Douglas"));
+            pessoas1.Add(new Pessoa(3, "Andréa"));
+            
+            pessoas2.Add(new Pessoa(4, "Geisa"));
+            pessoas2.Add(new Pessoa(5, "Sean"));
+            pessoas2.Add(new Pessoa(6, "Cati"));
         }
         #endregion
 
