@@ -101,8 +101,40 @@ namespace AppProjeto.Sistema
         #region Lista 2
         private void Lista2()
         {
-            Console.WriteLine("LISTA 2");
-            MenuListas();
+            int opcao = 0;
+            do
+            {
+                Console.WriteLine("LISTA 2");
+                MenuListas();
+                opcao = int.Parse(Console.ReadLine());
+                switch (opcao)
+                {
+                    case 1:
+                        Console.Clear();
+                        ResumoGeral(pessoas2);
+                        break;
+                    case 2:
+                        Console.Clear();
+                        Add(pessoas2);
+                        break;
+                    case 3:
+                        Excluir(pessoas2);
+                        Console.Clear();
+                        break;
+                    case 4:
+                        Transferir(pessoas2, pessoas1);
+                        Console.Clear();
+                        break;
+                    case 5:
+                        Console.WriteLine("Saindo!");
+                        break;
+                    default:
+                        Console.WriteLine("Opção inválida");
+                        break;
+                }
+                Console.ReadKey();
+                Console.Clear();
+            } while (opcao != 5);
         }
         #endregion
 
