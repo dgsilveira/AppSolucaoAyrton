@@ -58,12 +58,11 @@ namespace AppProjeto.Sistema
         #region Lista 1
         private void Lista1()
         {
-            Console.WriteLine("LISTA 1");
-            MenuListas();
-
             int opcao = 0;
             do
             {
+                Console.WriteLine("LISTA 1");
+                MenuListas();
                 opcao = int.Parse(Console.ReadLine());
                 switch (opcao)
                 {
@@ -73,6 +72,7 @@ namespace AppProjeto.Sistema
                         break;
                     case 2:
                         Console.Clear();
+                        Add(pessoas1);
                         break;
                     case 3:
                         Console.Clear();
@@ -84,9 +84,6 @@ namespace AppProjeto.Sistema
                         Console.Clear();
                         break;
                     case 6:
-                        Console.Clear();
-                        break;
-                    case 7:
                         Console.WriteLine("Saindo!");
                         break;
                     default:
@@ -95,7 +92,7 @@ namespace AppProjeto.Sistema
                 }
                 Console.ReadKey();
                 Console.Clear();
-            } while (opcao != 3);
+            } while (opcao != 6);
 
         }
 
@@ -112,7 +109,34 @@ namespace AppProjeto.Sistema
         #region Listas Compartilhadas
         private void MenuListas()
         {
-            Console.WriteLine("1 resumo geral\r\n2 detalhes geral\r\n3 Add\r\n4 Excluir\r\n5 Buscar\r\n6 Transferir\r\n7 Sair");
+            Console.WriteLine("1 resumo geral\r\n2 Add\r\n3 Excluir\r\n4 Buscar\r\n5 Transferir\r\n6 Sair");
+        }
+
+        private void ResumoGeral(List<Pessoa> lista)
+        {
+            if (lista.Count == 0)
+                Console.WriteLine("Lista vazia");
+            else
+            {
+                foreach (Pessoa p in lista)
+                {
+                    Console.WriteLine(p.Id);
+                    Console.WriteLine(p.Nome);
+                    Console.WriteLine();
+                }
+            }
+        }
+
+        private void Add(List<Pessoa> lista)
+        {
+            Console.WriteLine("Digite o id");
+            int id = int.Parse(Console.ReadLine());
+            Console.WriteLine("Digite o nome");
+            string nome = Console.ReadLine();
+
+            var pessoa = new Pessoa(id, nome);
+
+            lista.Add(pessoa);
         }
         #endregion
 
